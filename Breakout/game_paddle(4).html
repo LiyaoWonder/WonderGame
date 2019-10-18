@@ -53,6 +53,24 @@
             return blocks
         }
 
+        var enableDebugMode = function(mode) {
+            if (!mode) {
+                return
+            }
+            // pause 用 register 有点问题
+            window.addEventListener('keydown', function(event){
+                // event.key 写太多可以提取出来
+                if (event.key == 'ArrowDown') {
+                    pause = !pause
+                } else if ('12345678'.includes(event.key)) {
+                    // 临时载入关卡功能
+                    blocks = loadLevel(Number(event.key))
+                }
+                // else if (event.key == '2') {
+                //     blocks = loadLevel(2)
+                // }
+            })
+        }
         // 定义一个入口，在入口中初始化
         var __main = function() {
             var paddle = Paddle('paddle.png')
@@ -76,19 +94,7 @@
                 ball.fire()
             })
 
-            // pause 用 register 有点问题
-            window.addEventListener('keydown', function(event){
-                // event.key 写太多可以提取出来
-                if (event.key == 'ArrowDown') {
-                    pause = !pause
-                } else if ('12345678'.includes(event.key)) {
-                    // 临时载入关卡功能
-                    blocks = loadLevel(Number(event.key))
-                }
-                // else if (event.key == '2') {
-                //     blocks = loadLevel(2)
-                // }
-            })
+            enableDebugMode(true)
 
             game.update = function() {
                 if (pause) {
