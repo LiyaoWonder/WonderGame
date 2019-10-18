@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Wonder_paddle</title>
+    <style media="screen">
+        body {
+            background: grey;
+        }
+
+        canvas {
+            border: 5px white solid;
+            background-color: lightblue;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="id-canvas" width="400" height="500">
+    </canvas>
+    <script>
+        // 最外层只能有函数，不能有变量
+
+        var log = console.log.bind(console)
+
+        var imageFromPath = function(path) {
+            var img = new Image()
+            img.src = path
+            return img
+        }
+
+        var Paddle = function(path) {
+            var image = imageFromPath(path)
+            // o 初始化内容
+            var o = {
+                image: image,
+                width: 100,
+                height: 25,
+                x: 150,
+                y: 400,
+                speed: 10,
+            }
+            o.moveLeft = function() {
+                o.x -= o.speed
+            }
+            o.moveRight = function() {
+                o.x += o.speed
+                log('o.x', o.x)
+            }
+            o.leftBoundary = function() {
+                if (o.x <= -o.width) {
+                    // canvas width 400
+                    o.x = 400
+                }
+            }
+            o.rightBoundary = function() {
+                if (o.x >= 400) {
+                    o.x = -o.width
+                }
+            }
+
+            o.collide = function(ball) {
+                if (ball.y + ball.height > o.y) {
+                    // 一次有趣的 debug
+                    // log('o.x + o.image.width:', o.x + o.width, o.x, o.image.width)
+                    // log('ball.x', ball.x)
+                    if (ball.x > o.x && ball.x < o.x + o.width) {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+            }
+            return o
+        }
+
+        var Ball = function(path) {
+            var image = imageFromPath(path)
+            // o 初始化内容
+            var o = {
+                image: image,
+                width: 50,
+                height: 50,
+                x: 150,
+                y: 200,
+                speedX: 10,
+                speedY: 10,
+                fired: false,
+            }
+            o.fire = function() {
+                o.fired = true
+            }
+            o.move = function() {
+                if (o.fired) {
+                    if (o.x < 0 || o.x > 400) {
+                        o.speedX = -o.speedX
+                    }
+                    if (o.y < 0) {
+                        o.speedY = -o.speedY
+                    }
+                    if (o.y > 500) {
+                        o.y = 0
+                    }
+                    o.x += o.speedX
+                    o.y += o.speedY
+                }
+            }
+            o.rebound = function() {
+                o.speedY *= -1
+            }
+            return o
+        }
+
+        var aInb = function(a, b) {
+
+            if (b.y >= a.y && b.y <= a.y + a.height) {
+                if (b.x >= a.x && b.x <= a.x + a.width) {
+                    log('collide true')
+                    return true
+                }
+            }
+            return false
+        }
+
+        var Block = function(path) {
+            var image = imageFromPath(path)
+            var o = {
+                image: image,
+                width: 60,
+                height: 20,
+                x: 50,
+                y: 50,
+                alive: true,
+            }
+            o.kill = function() {
+                o.alive = false
+            }
+            o.collide = function(b) {
+                return o.alive && (aInb(o, b) || aInb(b, o))
+            }
+            return o
+        }
+
+        var Game = function(fps) {
+            var g = {
+                actions: {},
+                // 想要记录按键按下的状态
+                keydowns: {},
+            }
+            var canvas = document.querySelector('#id-canvas')
+            var context = canvas.getContext('2d')
+            g.canvas = canvas
+            g.context = context
+            var canvasW = 400
+            var canvasH = 500
+            //
+            g.image = function(gameImg) {
+                g.context.drawImage(gameImg.image, 0, 0, gameImg.width, gameImg.height, gameImg.x, gameImg.y, gameImg.width, gameImg.height)
+            }
+            // events
+            window.addEventListener('keydown', function(event) {
+                g.keydowns[event.key] = true
+            })
+            window.addEventListener('keyup', function(event) {
+                g.keydowns[event.key] = false
+            })
+            //
+            g.registerAction = function(key, callback) {
+                // 按键按下时要执行的动作保存在 actions 中
+                g.actions[key] = callback
+            }
+            // timer
+            setInterval(function() {
+                // events 遍历所有的key
+                var actions = Object.keys(g.actions)
+                // log('actions', actions)
+                for (var i = 0; i < actions.length; i++) {
+                    var key = actions[i]
+                    // 如果 key 被按下 调用注册的 actions
+                    if (g.keydowns[key]) {
+                        log('key', key)
+                        // 错误1
+                        g.actions[key]()
+                    }
+                }
+                // update
+                g.update()
+                // clear
+                context.clearRect(0, 0, g.canvas.width, g.canvas.height)
+                // draw
+                g.draw()
+            }, 1000 / fps)
+
+            return g
+        }
+
+        // 定义一个入口，在入口中初始化
+        var __main = function() {
+            var paddle = Paddle('paddle.png')
+            var ball = Ball('ball4.png')
+            var game = Game(60)
+
+            var blocks = []
+            var yValue = 30
+            for (var j = 0; j < 4; j++) {
+                for (var i = 0; i < 6; i++) {
+                    var b = Block('block2.png')
+                    // block 坐标
+                    b.x = i * 70
+                    b.y = yValue
+                    blocks.push(b)
+                    log('block', i)
+                }
+                yValue += 40
+            }
+
+            var pause = false
+            game.registerAction('ArrowLeft', function() {
+                paddle.moveLeft()
+                paddle.leftBoundary()
+            })
+            game.registerAction('ArrowRight', function() {
+                paddle.moveRight()
+                paddle.rightBoundary()
+            })
+            game.registerAction('ArrowUp', function() {
+                ball.fire()
+            })
+
+            // pause 用 register 有点问题
+            window.addEventListener('keydown', function(event) {
+                if (event.key == 'ArrowDown') {
+                    pause = !pause
+                }
+            })
+
+            game.update = function() {
+                if (pause) {
+                    return
+                }
+                ball.move()
+                if (paddle.collide(ball)) {
+                    ball.speedY *= -1
+                }
+                for (var i = 0; i < blocks.length; i++) {
+                    var block = blocks[i]
+                    if (block.collide(ball)) {
+                        log('kill')
+                        block.kill()
+                        ball.rebound()
+                    }
+                }
+
+            }
+
+            game.draw = function() {
+                // context.drawImage(paddle.image, 0, 0, paddle.width, paddle.height, paddle.x, paddle.y, paddle.width, paddle.height)
+                // 再封装
+                game.image(paddle)
+                game.image(ball)
+                for (var i = 0; i < blocks.length; i++) {
+                    var block = blocks[i]
+                    if (block.alive) {
+                        game.image(block)
+                    }
+                }
+            }
+
+        }
+
+        __main()
+    </script>
+</body>
+
+</html>

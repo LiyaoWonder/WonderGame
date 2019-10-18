@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Wonder_paddle</title>
+    <style media="screen">
+        body {
+            background: grey;
+        }
+
+        canvas {
+            border: 5px white solid;
+            background-color: lightblue;
+        }
+    </style>
+    <script src='game0.js'></script>
+    <script src='ball0.js'></script>
+    <script src='block0.js'></script>
+    <script src='paddle0.js'></script>
+    <script src='utility0.js'></script>
+</head>
+
+<body>
+    <canvas id="id-canvas" width="400" height="500">
+    </canvas>
+    <script>
+
+
+        // 定义一个入口，在入口中初始化
+        var __main = function() {
+            var paddle = Paddle('paddle.png')
+            var ball = Ball('ball4.png')
+            var game = Game()
+
+            var blocks = []
+            var yValue = 30
+            for (var j = 0; j < 4; j++) {
+                for (var i = 0; i < 6; i++) {
+                    var b = Block('block2.png')
+                    // block 坐标
+                    b.x = i * 70
+                    b.y = yValue
+                    blocks.push(b)
+                    log('block', i)
+                }
+                yValue += 40
+            }
+
+            var pause = false
+            game.registerAction('ArrowLeft', function() {
+                paddle.moveLeft()
+                paddle.leftBoundary()
+            })
+            game.registerAction('ArrowRight', function() {
+                paddle.moveRight()
+                paddle.rightBoundary()
+            })
+            game.registerAction('ArrowUp', function() {
+                ball.fire()
+            })
+
+            // pause 用 register 有点问题
+            window.addEventListener('keydown', function(event){
+                if (event.key == 'ArrowDown') {
+                    pause = !pause
+                }
+            })
+
+            game.update = function() {
+                if (pause) {
+                    return
+                }
+                ball.move()
+                if (paddle.collide(ball)) {
+                    ball.speedY *= -1
+                }
+                for (var i = 0; i < blocks.length; i++) {
+                    var block = blocks[i]
+                    if (block.collide(ball)) {
+                        log('kill')
+                        block.kill()
+                        ball.rebound()
+                    }
+                }
+
+            }
+
+            game.draw = function() {
+                // context.drawImage(paddle.image, 0, 0, paddle.width, paddle.height, paddle.x, paddle.y, paddle.width, paddle.height)
+                // 再封装
+                game.image(paddle)
+                game.image(ball)
+                for (var i = 0; i < blocks.length; i++) {
+                    var block = blocks[i]
+                    if (block.alive) {
+                        game.image(block)
+                    }
+                }
+            }
+
+        }
+
+        __main()
+    </script>
+</body>
+
+</html>

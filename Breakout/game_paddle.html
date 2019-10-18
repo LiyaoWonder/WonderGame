@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Wonder_paddle</title>
+        <style media="screen">
+            body {
+                background: grey;
+            }
+            canvas {
+                border: 5px white solid;
+            }
+        </style>
+    </head>
+
+    <body>
+        <canvas id="id-canvas" width="400" height="500"></canvas>
+        <script>
+            var log = console.log.bind(console)
+            var canvas = document.querySelector('#id-canvas')
+            var context = canvas.getContext('2d')
+
+            var img = new Image()
+            img.src = 'paddle.png'
+            log(img)
+            var canvasW = 400
+            var canvasH = 500
+            var paddleW = 90
+            var paddleH = 20
+            var posPar = 150
+            var posVer = 400
+            img.onload = function() {
+                // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) mdn canvas img
+                context.drawImage(img, 0, 0, paddleW, paddleH, posPar, posVer, paddleW, paddleH)
+            }
+
+            var leftDown = false
+            var rightDown = false
+            var speed = 5
+            // events
+            // keydown
+            window.addEventListener('keydown', function(event){
+                // event is a object
+                log(event)
+                var k = event.key
+                if (k == 'ArrowLeft') {
+                    /* 游戏的原理和动画是相同的
+                    FPS = 60 1s --> 60times
+                    每一次都清空重画
+                    */
+                    leftDown = true
+                    // posPar -= 10
+                    // clear
+                    // context.clearRect(0, 0, canvas.width, canvas.height)
+                    // draw again
+                    // context.drawImage(img, 0, 0, 90, 20, posPar, posVer, 90, 20)
+                } else if (k == 'ArrowRight') {
+                    rightDown = true
+                    // posPar += 10
+                    // clear
+                    // context.clearRect(0, 0, canvas.width, canvas.height)
+                    // draw again
+                    // context.drawImage(img, 0, 0, 90, 20, posPar, posVer, 90, 20)
+                }
+            })
+            // keyup
+            // keyup clear state
+            window.addEventListener('keyup', function(event){
+                var k = event.key
+                if (k == 'ArrowLeft') {
+                    leftDown = false
+                } else if (k == 'ArrowRight') {
+                    rightDown = false
+                }
+            })
+
+            // Achieve FPS=60 --> 定时器
+            setInterval(function(){
+                // update x and y
+                if (leftDown) {
+                    posPar -= speed
+                    // boundary
+                    if (posPar <= -paddleW){
+                        posPar = canvasW
+                    }
+                } else if (rightDown) {
+                    posPar += speed
+                    // boundary
+                    if (posPar >= canvasW) {
+                        posPar = - paddleW
+                    }
+                }
+                log(posPar)
+                // clear
+                context.clearRect(0, 0, canvas.width, canvas.height)
+                // draw
+                context.drawImage(img, 0, 0, paddleW, paddleH, posPar, posVer, paddleW, paddleH)
+
+            }, 1000/60)
+        </script>
+    </body>
+</html>

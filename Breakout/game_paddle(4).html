@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Wonder_paddle</title>
+    <style media="screen">
+        body {
+            background: grey;
+        }
+
+        canvas {
+            border: 5px white solid;
+            background-color: lightblue;
+        }
+
+        button {
+            display: inline-block;
+        }
+    </style>
+
+    <script src='game1.js'></script>
+    <script src='ball1.js'></script>
+    <script src='block1.js'></script>
+    <script src='paddle1.js'></script>
+    <script src='utility1.js'></script>
+    <script src='level.js'></script>
+    <!-- <script src='ranking.js'></script> -->
+</head>
+
+<body>
+    <canvas id="id-canvas" width="400" height="500"></canvas>
+    <br>
+    <input class='id-input-name' type='text' placeholder="What's your name?"></input>
+    <button class='id-button-add'>Ranking</button>
+    <div id="id-div-container">
+
+    <div>
+    <script>
+
+        var loadLevel = function(n){
+            n = n - 1
+            var level = levels[n]
+            log('level', level)
+            var blocks = []
+            for (var j = 0; j < level.length; j++) {
+                var p = level[j]
+                log('p=', p)
+                var b = Block('block2.png', p)
+                log('b=', b)
+                blocks.push(b)
+            }
+            return blocks
+        }
+
+        // 定义一个入口，在入口中初始化
+        var __main = function() {
+            var paddle = Paddle('paddle.png')
+            var ball = Ball('ball4.png')
+            var game = Game()
+            var score = 0
+
+            var blocks = loadLevel(1)
+            var yValue = 30
+
+            var pause = false
+            game.registerAction('ArrowLeft', function() {
+                paddle.moveLeft()
+                paddle.leftBoundary()
+            })
+            game.registerAction('ArrowRight', function() {
+                paddle.moveRight()
+                paddle.rightBoundary()
+            })
+            game.registerAction('ArrowUp', function() {
+                ball.fire()
+            })
+
+            // pause 用 register 有点问题
+            window.addEventListener('keydown', function(event){
+                // event.key 写太多可以提取出来
+                if (event.key == 'ArrowDown') {
+                    pause = !pause
+                } else if ('12345678'.includes(event.key)) {
+                    // 临时载入关卡功能
+                    blocks = loadLevel(Number(event.key))
+                }
+                // else if (event.key == '2') {
+                //     blocks = loadLevel(2)
+                // }
+            })
+
+            game.update = function() {
+                if (pause) {
+                    game.context.fillText("PAUSE", 200, 200)
+                    log("PAUSED")
+                    return
+                }
+
+                ball.move()
+
+                if (paddle.collide(ball)) {
+                    ball.rebound()
+                }
+
+                for (var i = 0; i < blocks.length; i++) {
+                    var block = blocks[i]
+                    log('block', block)
+                    if (block.collide(ball)) {
+                        log('kill')
+                        block.kill()
+                        ball.rebound()
+                        score += 1
+                    }
+                }
+                if (ball.y > 500) {
+                    log("You are dead")
+                    var i = 24
+                    for (var j = 0; j < blocks.length; j ++) {
+                        if (blocks[j].alive) {
+                            i -= 1;
+                        }
+                    }
+                    log(i)
+                    pause = true
+                }
+            }
+
+            game.draw = function() {
+                // context.drawImage(paddle.image, 0, 0, paddle.width, paddle.height, paddle.x, paddle.y, paddle.width, paddle.height)
+                // 再封装
+                game.image(paddle)
+                game.image(ball)
+                for (var i = 0; i < blocks.length; i++) {
+                    var block = blocks[i]
+                    log('draw block', block)
+                    if (block.alive) {
+                        game.image(block)
+                    }
+                }
+            }
+
+        }
+
+        __main()
+    </script>
+</body>
+
+</html>
