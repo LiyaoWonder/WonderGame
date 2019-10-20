@@ -18,15 +18,15 @@ var Block = function(path, position) {
             o.alive = false
         }
     }
-    o.collide = function(b) {
-        if (aInb(o, b) || aInb(b, o)) {
-            return true
-        }
-        // log('collide false')
-        return false
-    }
     // o.collide = function(b) {
-    //     return o.alive && (aInb(o, b) || aInb(b, o))
+    //     if (aInb(o, b) || aInb(b, o)) {
+    //         return true
+    //     }
+    //     // log('collide false')
+    //     return false
     // }
+    o.collide = function(b) {
+        return o.alive && (aInb(o, b) || aInb(b, o))
+    }
     return o
 }
