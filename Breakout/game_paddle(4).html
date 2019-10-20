@@ -31,7 +31,11 @@
 <body>
     <canvas id="id-canvas" width="400" height="500"></canvas>
     <br>
-    <input class='id-input-name' type='text' placeholder="What's your name?"></input>
+    <input id="id-input-speed" type="range" name="" value="">
+    游戏速度：
+    <input id="id-input-speed-value" type="text">
+    <hr>
+    <input id='id-input-ranking' type='text' placeholder="What's your name?">
     <button class='id-button-add'>Ranking</button>
     <div id="id-div-container">
 
@@ -53,10 +57,12 @@
             return blocks
         }
 
+        var blocks = loadLevel(1)
         var enableDebugMode = function(mode) {
             if (!mode) {
                 return
             }
+
             // pause 用 register 有点问题
             window.addEventListener('keydown', function(event){
                 // event.key 写太多可以提取出来
@@ -70,7 +76,22 @@
                 //     blocks = loadLevel(2)
                 // }
             })
+
+            // 控制速度
+            // 给 input 绑定事件
+            document.querySelector('#id-input-speed').addEventListener('input', function(event) {
+                var input = event.target
+                // 看一下事件
+                // log(event, input.value)
+                window.fps = Number(input.value)
+            })
+
+            // 游戏速度显示
+            var fps_bar = document.getElementById('id-input-speed')
+            var fps_show = document.getElementById('id-input-speed-value')
+            fps_show.value = fps_bar.value
         }
+
         // 定义一个入口，在入口中初始化
         var __main = function() {
             var paddle = Paddle('paddle.png')
@@ -78,7 +99,7 @@
             var game = Game()
             var score = 0
 
-            var blocks = loadLevel(1)
+
             var yValue = 30
 
             var pause = false
@@ -111,7 +132,7 @@
 
                 for (var i = 0; i < blocks.length; i++) {
                     var block = blocks[i]
-                    log('block', block)
+                    // log('block', block)
                     if (block.collide(ball)) {
                         log('kill')
                         block.kill()
@@ -127,7 +148,7 @@
                             i -= 1;
                         }
                     }
-                    log(i)
+                    // log(i)
                     pause = true
                 }
             }
@@ -139,7 +160,7 @@
                 game.image(ball)
                 for (var i = 0; i < blocks.length; i++) {
                     var block = blocks[i]
-                    log('draw block', block)
+                    // log('draw block', block)
                     if (block.alive) {
                         game.image(block)
                     }

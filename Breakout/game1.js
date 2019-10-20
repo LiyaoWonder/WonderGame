@@ -31,8 +31,9 @@ var Game = function() {
         g.actions[key] = callback
     }
 
-    // timer
-    setInterval(function() {
+    window.fps = 30
+
+    var runloop = function(fps) {
         // events 遍历所有的key
         var actions = Object.keys(g.actions)
         // log('actions', actions)
@@ -51,7 +52,17 @@ var Game = function() {
         context.clearRect(0, 0, g.canvas.width, g.canvas.height)
         // draw
         g.draw()
-    }, 1000 / 60)
+
+        // next runloop
+        // 递归的 setTimeout
+        setTimeout(function(fps) {
+            runloop()
+        }, 1000 / window.fps)
+    }
+    // timer
+    setTimeout(function(fps) {
+        runloop()
+    }, 1000 / window.fps)
 
     return g
 }

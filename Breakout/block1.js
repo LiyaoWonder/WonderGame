@@ -22,7 +22,7 @@ var Block = function(path, position) {
         if (aInb(o, b) || aInb(b, o)) {
             return true
         }
-        log('collide false')
+        // log('collide false')
         return false
     }
     // o.collide = function(b) {

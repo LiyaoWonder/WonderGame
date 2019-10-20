@@ -30,7 +30,7 @@ var Paddle = function(path) {
 
     o.collide = function(ball) {
         if (ball.y + ball.height > o.y) {
-            log('ball.y + ball.height > o.y')
+            // log('ball.y + ball.height > o.y')
             // 一次有趣的 debug
             // log('o.x + o.image.width:', o.x + o.width, o.x, o.image.width)
             // log('ball.x', ball.x)
