@@ -98,6 +98,7 @@ var Game = function(fps, images, runCallback) {
         return image
     }
 
+
     // 开始运行程序
     g.run = function() {
         runCallback(g)
