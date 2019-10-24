@@ -1,21 +1,21 @@
-var loadLevel = function(n){
+var loadLevel = function(game, n){
     n = n - 1
     var level = levels[n]
-    log('level', level)
+    // log('level', level)
     var blocks = []
     for (var j = 0; j < level.length; j++) {
         var p = level[j]
-        log('p=', p)
-        var b = Block('block2.png', p)
-        log('b=', b)
+        // log('p=', p)
+        var b = Block(game, p)
+        // log('b=', b)
         blocks.push(b)
     }
     return blocks
 }
 
-var blocks = loadLevel(1)
-var enableDebugMode = function(mode) {
-    if (!mode) {
+var blocks = []
+var enableDebugMode = function(game, enable) {
+    if (!enable) {
         return
     }
 
@@ -28,7 +28,7 @@ var enableDebugMode = function(mode) {
             window.pause = !window.pause
         } else if ('12345678'.includes(event.key)) {
             // 临时载入关卡功能
-            blocks = loadLevel(Number(event.key))
+            blocks = loadLevel(game, Number(event.key))
         }
         // else if (event.key == '2') {
         //     blocks = loadLevel(2)
@@ -54,82 +54,141 @@ var enableDebugMode = function(mode) {
 
 // 定义一个入口，在入口中初始化
 var __main = function() {
-    var paddle = Paddle('paddle.png')
-    var ball = Ball('ball4.png')
-    var game = Game()
-    var score = 0
+    var images = {
+        ball: 'ball.png',
+        block: 'block.png',
+        paddle: 'paddle.png',
+    }
+    var game = Game(30, images, function(g){
+        var paddle = Paddle(game)
+        var ball = Ball(game)
 
+        var score = 0
 
-    var yValue = 30
+        blocks = loadLevel(game, 1)
 
+        game.registerAction('ArrowLeft', function() {
+            paddle.moveLeft()
+            paddle.leftBoundary()
+        })
+        game.registerAction('ArrowRight', function() {
+            paddle.moveRight()
+            paddle.rightBoundary()
+        })
+        game.registerAction('ArrowUp', function() {
+            ball.fire()
+        })
 
-    game.registerAction('ArrowLeft', function() {
-        paddle.moveLeft()
-        paddle.leftBoundary()
-    })
-    game.registerAction('ArrowRight', function() {
-        paddle.moveRight()
-        paddle.rightBoundary()
-    })
-    game.registerAction('ArrowUp', function() {
-        ball.fire()
-    })
-
-    enableDebugMode(true)
-
-    game.update = function() {
-        if (window.pause) {
-            game.context.fillText("PAUSE", 10, 10)
-            log("PAUSED")
-            return
-        }
-
-        ball.move()
-
-        if (paddle.collide(ball)) {
-            ball.rebound()
-        }
-
-        for (var i = 0; i < blocks.length; i++) {
-            var block = blocks[i]
-            // log('block', block)
-            if (block.collide(ball)) {
-                log('kill')
-                block.kill()
-                ball.rebound()
-                score += 100
+        game.update = function() {
+            if (window.pause) {
+                game.context.fillText("PAUSE", 10, 10)
+                log("PAUSED")
+                return
             }
-        }
-        if (ball.y > 500) {
-            log("You are dead")
-            var i = 24
-            for (var j = 0; j < blocks.length; j ++) {
-                if (blocks[j].alive) {
-                    i -= 1;
+
+            ball.move()
+
+            if (paddle.collide(ball)) {
+                ball.rebound()
+            }
+
+            for (var i = 0; i < blocks.length; i++) {
+                var block = blocks[i]
+                // log('block', block)
+                if (block.collide(ball)) {
+                    log('kill')
+                    block.kill()
+                    ball.rebound()
+                    score += 100
                 }
             }
-            // log(i)
-            window.pause = true
-        }
-    }
 
-    game.draw = function() {
-        // context.drawImage(paddle.image, 0, 0, paddle.width, paddle.height, paddle.x, paddle.y, paddle.width, paddle.height)
-        // 再封装
-        game.image(paddle)
-        game.image(ball)
-        for (var i = 0; i < blocks.length; i++) {
-            var block = blocks[i]
-            // log('draw block', block)
-            if (block.alive) {
-                game.image(block)
+        }
+
+        // mouse event
+        var ballEnableDrag = false
+        var paddleEnableDrag = false
+        var blockEnableDrag = false
+        game.canvas.addEventListener('mousedown', function(event){
+            log(event)
+            var x = event.layerX
+            var y = event.layerY
+            // 检查是否点中了 ball
+            if (ball.hasPoint(x, y)) {
+                // 设置拖拽状态
+                log(x, y, 'Drag')
+                ballEnableDrag = true
+            } else if (paddle.hasPoint(x, y)) {
+                paddleEnableDrag = true
             }
-        }
-        // draw label
-        game.context.font = "20px serif"
-        game.context.fillText("Score:" + score, 10, 450)
 
-    }
+            for (var i = 0; i < blocks.length; i++) {
+                var block = blocks[i]
+                // log('block', block)
+                if (block.hasPoint(x, y)) {
+                    block.blockEnableDrag = true
+                }
+            }
+        })
+
+        game.canvas.addEventListener('mousemove', function(event){
+            var x = event.offsetX
+            var y = event.offsetY
+            if (ballEnableDrag) {
+                log('Move', x, y)
+                ball.x = x
+                ball.y = y
+            } else if (paddleEnableDrag) {
+                paddle.x = x
+                paddle.y = y
+            }
+            for (var i = 0; i < blocks.length; i++) {
+                var block = blocks[i]
+                // log('block', block)
+                if (block.blockEnableDrag) {
+                    block.x = x
+                    block.y = y
+                }
+            }
+
+
+        })
+
+        game.canvas.addEventListener('mouseup', function(event){
+            ballEnableDrag = false
+            paddleEnableDrag = false
+            for (var i = 0; i < blocks.length; i++) {
+                var block = blocks[i]
+                // log('block', block)
+                block.blockEnableDrag = false
+
+            }
+
+        })
+
+        game.draw = function() {
+            // context.drawImage(paddle.image, 0, 0, paddle.width, paddle.height, paddle.x, paddle.y, paddle.width, paddle.height)
+            // 再封装
+            game.image(paddle)
+            game.image(ball)
+            for (var i = 0; i < blocks.length; i++) {
+                var block = blocks[i]
+                // log('draw block', block)
+                if (block.alive) {
+                    game.image(block)
+                }
+            }
+            // draw label
+            game.context.font = "20px serif"
+            game.context.fillStyle = "white"
+            game.context.fillText("Score:" + score, 10, 480)
+
+        }
+
+    })
+
+    enableDebugMode(game, true)
+
 
 }
 
