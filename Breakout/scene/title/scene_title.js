@@ -1,25 +1,17 @@
-var SceneTitle = function(game) {
-    var s = {
-        game: game,
+class SceneTitle extends WonderScene {
+    constructor(game) {
+        super(game)
+        game.registerAction('Enter', function() {
+            var scene = Scene(game)
+            game.replaceScene(scene)
+        } )
     }
-
-    s.draw = function() {
-        game.context.font = "40px serif"
-        game.context.fillStyle = "yellow"
-        game.context.fillText("Game Start", 100, 200)
-        game.context.font = "20px serif"
-        game.context.fillStyle = "yellow"
-        game.context.fillText("Press Enter", 150, 300)
+    draw() {
+        this.game.context.font = "40px serif"
+        this.game.context.fillStyle = "yellow"
+        this.game.context.fillText("Game Start", 100, 200)
+        this.game.context.font = "20px serif"
+        this.game.context.fillStyle = "yellow"
+        this.game.context.fillText("Press Enter", 150, 300)
     }
-
-    s.update = function( ) {
-
-    }
-
-    s.game.registerAction('Enter', function() {
-        var scene = Scene(game)
-        game.replaceScene(scene)
-    } )
-
-    return s
 }

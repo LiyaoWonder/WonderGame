@@ -61,7 +61,7 @@ var __main = function() {
         paddle: 'img/paddle.png',
     }
     var game = Game(30, images, function(g){
-        var scene = SceneTitle(game)
+        var scene = new SceneTitle(game)
 
         game.update = function() {
             scene.update()

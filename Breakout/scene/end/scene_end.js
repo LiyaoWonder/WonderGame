@@ -1,25 +1,17 @@
-var SceneEnd = function(game) {
-    var s = {
-        game: game,
+class SceneEnd extends WonderScene {
+    constructor(game) {
+        super(game)
+        game.registerAction('r', function() {
+            var scene = new SceneTitle(game)
+            game.replaceScene(scene)
+        } )
     }
-
-    s.draw = function() {
-        game.context.font = "40px serif"
-        game.context.fillStyle = "red"
-        game.context.fillText("Game Over", 110, 200)
-        game.context.font = "20px serif"
-        game.context.fillStyle = "red"
-        game.context.fillText("Press r to restart", 140, 300)
+    draw() {
+        this.game.context.font = "40px serif"
+        this.game.context.fillStyle = "red"
+        this.game.context.fillText("Game Over", 110, 200)
+        this.game.context.font = "20px serif"
+        this.game.context.fillStyle = "red"
+        this.game.context.fillText("Press r to restart", 140, 300)
     }
-
-    s.update = function() {
-
-    }
-
-    s.game.registerAction('r', function() {
-        var scene = SceneTitle(game)
-        game.replaceScene(scene)
-    } )
-
-    return s
 }
