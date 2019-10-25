@@ -23,6 +23,7 @@ var enableDebugMode = function(game, enable) {
     window.pause = false
 
     window.addEventListener('keydown', function(event){
+        log(event)
         // event.key 写太多可以提取出来
         if (event.key == 'ArrowDown') {
             window.pause = !window.pause
@@ -55,12 +56,12 @@ var enableDebugMode = function(game, enable) {
 // 定义一个入口，在入口中初始化
 var __main = function() {
     var images = {
-        ball: 'ball.png',
-        block: 'block.png',
-        paddle: 'paddle.png',
+        ball: 'img/ball.png',
+        block: 'img/block.png',
+        paddle: 'img/paddle.png',
     }
     var game = Game(30, images, function(g){
-        var scene = Scene(game)
+        var scene = SceneTitle(game)
 
         game.update = function() {
             scene.update()
