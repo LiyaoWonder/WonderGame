@@ -60,7 +60,7 @@ var __main = function() {
         block: 'img/block.png',
         paddle: 'img/paddle.png',
     }
-    var game = Game(30, images, function(g){
+    var game = new WonderGame(30, images, function(g){
         var scene = new SceneTitle(game)
 
         game.update = function() {
