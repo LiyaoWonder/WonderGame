@@ -56,10 +56,12 @@ var enableDebugMode = function(game, enable) {
 // 定义一个入口，在入口中初始化
 var __main = function() {
     var images = {
-        bullet: 'resources/img/bullet.png',
-        bomb: 'resources/img/bomb.png',
+        bullet: 'resources/img/bullet-2.png',
+        planet: 'resources/img/planet.png',
         player: 'resources/img/player.png',
         sky: 'resources/img/background.png',
+        enemy1: 'resources/img/enemy1.png',
+        enemy2: 'resources/img/enemy_2.png',
     }
     var game = new WonderGame(30, images, function(g){
         var scene = new Scene(game)

@@ -2,9 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="79553cd4-ea49-4dfc-bae4-cd48fbd4561b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/change_name.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Breakout/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Breakout/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Breakout/wondergame/wonder_game.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Breakout/wondergame/wonder_game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/achievement.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/big_spaceship_flying.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/bullet.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/bullet.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/button.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/enemy1_down.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/enemy1_down.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/enemy2_down.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/enemy2_down.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/enemy3_down.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/enemy3_down.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/game_music.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/game_music.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/game_over.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/game_over.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/get_bomb.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/get_double_laser.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/out_porp.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/use_bomb.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Breakout/level.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Breakout/level.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,8 +78,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="190" />
-    <option name="y" value="44" />
+    <option name="x" value="210" />
+    <option name="y" value="104" />
     <option name="width" value="1260" />
     <option name="height" value="897" />
   </component>
@@ -91,6 +109,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
@@ -174,9 +193,9 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49872774" visible="true" weight="0.28113663" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49872774" visible="true" weight="0.24551214" />
       <window_info id="Structure" order="1" sideWeight="0.50127226" side_tool="true" weight="0.2496977" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -188,7 +207,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32910052" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5012092" side_tool="true" visible="true" weight="0.17989418" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5012092" side_tool="true" visible="true" weight="0.17435898" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32910052" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />

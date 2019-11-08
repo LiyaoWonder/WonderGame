@@ -1,3 +1,145 @@
+// 单例？ --> 全局变量
+const config = {
+    player_speed: 10,
+    planet_speed: 3,
+    enemy_speed: 5,
+    bullet_speed: 5,
+    bullet_cooldown: 10,
+    planet_speed: 5,
+}
+
+class Bullet extends WonderImg {
+    constructor(game) {
+        super(game, 'bullet')
+        this.setup()
+    }
+    setup() {
+        this.speed = 7
+    }
+    update() {
+        this.speed = config.bullet_speed
+        this.y -= this.speed
+    }
+}
+
+class Player extends WonderImg {
+    constructor(game) {
+        super(game, 'player')
+        this.setup()
+    }
+
+    setup() {
+        this.speed = 10
+        this.cooldown = 0
+    }
+
+    update() {
+        this.speed = config.player_speed
+        if (this.cooldown > 0) {
+            this.cooldown --
+        }
+    }
+
+    fire() {
+        if (this.cooldown == 0) {
+            // 三帧之后发射
+            this.cooldown =  config.bullet_cooldown
+            var x = this.x + 20
+            var y = this.y
+            var b = new Bullet(this.game)
+            b.x = x
+            b.y = y
+            this.scene.addElement(b)
+        }
+    }
+
+    moveLeft() {
+        this.x -= this.speed
+    }
+
+    moveRight() {
+        this.x += this.speed
+    }
+
+    moveUp() {
+        this.y -= this.speed
+    }
+
+    moveDown() {
+        this.y += this.speed
+    }
+
+    leftBoundary() {
+        if (this.x <= -this.width) {
+            // canvas width 480
+            this.x = 480
+        }
+    }
+
+    rightBoundary() {
+        if (this.x >= 480) {
+            this.x = -this.width
+        }
+    }
+}
+
+const randomBetween = function(start, end) {
+    // 左右都是闭区间
+    var n = Math.random() * (end - start + 1)
+    return Math.floor(n + start)
+}
+
+class Enemy extends WonderImg {
+    constructor(game) {
+        var type = randomBetween(1, 2)
+        // js 自动转化为 string
+        var name = 'enemy' + type
+        super(game, name)
+        this.setup()
+    }
+
+    setup() {
+        this.speed = randomBetween(2, 5)
+        // 初始化速度与初始化位置
+        this.x = randomBetween(0, 350)
+        this.y = randomBetween(-120, -100)
+    }
+
+    update() {
+        this.y += this.speed
+        if (this.y > 800) {
+            // 一大于800就重置
+            this.setup()
+        }
+    }
+
+}
+
+class Planet extends WonderImg {
+    constructor(game) {
+        super(game, 'planet')
+        this.setup()
+    }
+
+    setup() {
+        this.speed = randomBetween(3, 7)
+        // 初始化速度与初始化位置
+        this.x = randomBetween(0, 350)
+        this.y = randomBetween(-700, -400)
+    }
+
+    update() {
+        this.speed = config.planet_speed
+        this.y += this.speed
+        if (this.y > 800) {
+            // 一大于800就重置
+            this.setup()
+        }
+    }
+
+}
+
+
 class Scene extends WonderScene {
     constructor(game) {
         super(game)
@@ -8,31 +150,59 @@ class Scene extends WonderScene {
         // } )
 
         this.setup()
+        this.setupInputs()
     }
 
     setup() {
-        this.bg = new WonderImg(this.game, 'sky')
-        this.player = new WonderImg(this.game, 'player')
-        this.bomb = new WonderImg(this.game, 'bomb')
+        var game = this.game
+        this.bg = new WonderImg(game, 'sky')
+        this.planet = new Planet(game)
+
+
+        this.player = new Player(game)
         this.player.x = 70
         this.player.y = 500
 
-        this.game.registerAction('ArrowLeft', function() {
-                paddle.moveLeft()
-                paddle.leftBoundary()
-            })
-        this.game.registerAction('ArrowRight', function() {
-            paddle.moveRight()
-            paddle.rightBoundary()
-        })
-        this.game.registerAction('ArrowUp', function() {
-            ball.fire()
-        })
+        this.numberOfEnemies = 10
 
         this.addElement(this.bg)
+        this.addElement(this.planet)
         this.addElement(this.player)
-        this.addElement(this.bomb)
+        //
+        this.addEnemies()
+    }
 
+    addEnemies() {
+        var enemies = []
+        for (let i = 0; i < this.numberOfEnemies; i++) {
+            var e = new Enemy(this.game)
+            enemies.push(e)
+            this.addElement(e)
+        }
+        this.enemies = enemies
+    }
+
+    setupInputs() {
+        var g = this.game
+        var s = this
+
+        g.registerAction('ArrowLeft', function() {
+            s.player.moveLeft()
+            // s.player.leftBoundary()
+        })
+        g.registerAction('ArrowRight', function() {
+            s.player.moveRight()
+            // s.player.rightBoundary()
+        })
+        g.registerAction('ArrowUp', function() {
+            s.player.moveUp()
+        })
+        g.registerAction('ArrowDown', function() {
+            s.player.moveDown()
+        })
+        g.registerAction(' ', function() {
+            s.player.fire()
+        })
     }
 
     // draw() {
@@ -47,7 +217,7 @@ class Scene extends WonderScene {
     // }
 
     update() {
-        this.bomb.y += 2
+        super.update()
     }
 }
 
