@@ -9,7 +9,7 @@ class WonderImg {
     }
 
     draw() {
-
+        this.game.drawImage(this)
     }
 
     update() {

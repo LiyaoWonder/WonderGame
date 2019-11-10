@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="79553cd4-ea49-4dfc-bae4-cd48fbd4561b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/game.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Aircraft_gua/game.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Aircraft_gua/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/img/bullet-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/img/enemy1.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/achievement.mp3" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/big_spaceship_flying.mp3" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/bullet.mp3" beforeDir="false" />
@@ -22,7 +26,9 @@
       <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/get_double_laser.mp3" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/out_porp.mp3" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Aircraft_gua/resources/sound/use_bomb.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Breakout/level.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Breakout/level.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/scene/main/scene.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Aircraft_gua/scene/main/scene.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/wondergame/wonder_img.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Aircraft_gua/wondergame/wonder_img.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Aircraft_gua/wondergame/wonder_scene.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Aircraft_gua/wondergame/wonder_scene.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,8 +41,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pygame_recreate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="699">
-              <caret line="123" column="17" lean-forward="true" selection-start-line="123" selection-start-column="17" selection-end-line="123" selection-end-column="17" />
+            <state relative-caret-position="668">
+              <caret line="123" column="17" selection-start-line="123" selection-start-column="17" selection-end-line="123" selection-end-column="17" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -77,7 +83,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="x" value="210" />
     <option name="y" value="104" />
     <option name="width" value="1260" />
@@ -193,9 +199,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
+    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49872774" visible="true" weight="0.24551214" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49872774" visible="true" weight="0.24546553" />
       <window_info id="Structure" order="1" sideWeight="0.50127226" side_tool="true" weight="0.2496977" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -207,7 +214,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32910052" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5012092" side_tool="true" visible="true" weight="0.17435898" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5012092" side_tool="true" visible="true" weight="0.17354497" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32910052" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -239,8 +246,8 @@
     <entry file="file://$PROJECT_DIR$/img/Explosion/MetallicMediumBlackfootedferret-small-1 (dragged).png" />
     <entry file="file://$PROJECT_DIR$/pygame_recreate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="699">
-          <caret line="123" column="17" lean-forward="true" selection-start-line="123" selection-start-column="17" selection-end-line="123" selection-end-column="17" />
+        <state relative-caret-position="668">
+          <caret line="123" column="17" selection-start-line="123" selection-start-column="17" selection-end-line="123" selection-end-column="17" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

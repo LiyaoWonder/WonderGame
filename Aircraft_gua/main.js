@@ -62,11 +62,12 @@ var __main = function() {
         sky: 'resources/img/background.png',
         enemy1: 'resources/img/enemy1.png',
         enemy2: 'resources/img/enemy_2.png',
+        spark: 'resources/img/spark.png',
     }
     var game = new WonderGame(30, images, function(g){
-        var scene = new Scene(game)
-
-        game.update = function() {
+        // var scene = new Scene(game)
+        var scene = new SceneTitle(game)
+        game.update =  function() {
             scene.update()
         }
 

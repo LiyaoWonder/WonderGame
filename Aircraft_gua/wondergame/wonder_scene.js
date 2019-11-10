@@ -18,10 +18,11 @@ class WonderScene {
     }
 
     draw() {
-        for (var i = 0; i < this.elements.length; i++) {
-            var e = this.elements[i]
+        for (var e of this.elements) {
             // log('elements', e)
-            this.game.drawImage(e)
+            // this.game.drawImage(e)
+            // 抽象出来 调用他自己 自己是什么就去 draw 什么
+            e.draw()
         }
     }
 
