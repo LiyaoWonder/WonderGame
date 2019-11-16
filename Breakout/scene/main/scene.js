@@ -22,6 +22,14 @@ var Scene = function(game) {
         ball.fire()
     })
 
+    // game.registerAction('i', function() {
+    //     log('rrrrrrrrr')
+    //     game.context.font = "30px serif"
+    //     game.context.fillStyle = "white"
+    //     game.context.fillText("Edit your Game Level", 110, 200)
+    // })
+
+
     s.draw = function() {
         game.image(paddle)
         game.image(ball)
@@ -46,6 +54,13 @@ var Scene = function(game) {
         log(event)
         var x = event.layerX
         var y = event.layerY
+        block_pos = [x, y]
+        log('block_pos', block_pos)
+        var currentLevel = blocks
+        log('currentLevel', currentLevel)
+        currentLevel.push(block_pos)
+        // blocks = loadLevel(game, 1)
+
         // 检查是否点中了 ball
         if (ball.hasPoint(x, y)) {
             // 设置拖拽状态

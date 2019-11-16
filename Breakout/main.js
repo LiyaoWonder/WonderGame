@@ -34,6 +34,11 @@ var enableDebugMode = function(game, enable) {
         // else if (event.key == '2') {
         //     blocks = loadLevel(2)
         // }
+        if (event.key == 'i') {
+            game.context.font = "15px serif"
+            game.context.fillStyle = "white"
+            game.context.fillText("Edit your Game Level", 50, 50)
+        }
     })
 
     // 控制速度

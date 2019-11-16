@@ -56,17 +56,27 @@ var enableDebugMode = function(game, enable) {
 // 定义一个入口，在入口中初始化
 var __main = function() {
     var images = {
+
         bullet: 'resources/img/bullet-2.png',
         planet: 'resources/img/planet.png',
         player: 'resources/img/player.png',
         sky: 'resources/img/background.png',
         enemy1: 'resources/img/enemy1.png',
         enemy2: 'resources/img/enemy_2.png',
+        enemy3: 'resources/img/enemy_3.png',
         spark: 'resources/img/spark.png',
+        // 多动态动画
+        walk1: 'resources/img/walk1.png',
+        walk2: 'resources/img/walk2.png',
+        walk3: 'resources/img/walk3.png',
+        idle1: 'resources/img/silence1.png',
+        idle2: 'resources/img/silence2.png',
+        idle3: 'resources/img/silence3.png',
     }
     var game = new WonderGame(30, images, function(g){
         // var scene = new Scene(game)
         var scene = new SceneTitle(game)
+
         game.update =  function() {
             scene.update()
         }

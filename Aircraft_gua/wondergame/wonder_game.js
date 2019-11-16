@@ -14,10 +14,10 @@ class WonderGame {
         var self = this
 
         window.addEventListener('keydown', function(event) {
-            self.keydowns[event.key] = true
+            self.keydowns[event.key] = 'down'
         })
         window.addEventListener('keyup', event => {
-            this.keydowns[event.key] = false
+            this.keydowns[event.key] = 'up'
         })
 
         this.init()
@@ -49,10 +49,15 @@ class WonderGame {
         for (var i = 0; i < actions.length; i++) {
             var key = actions[i]
             // 如果 key 被按下 调用注册的 actions
-            if (g.keydowns[key]) {
-                log('key', key)
+            var status = g.keydowns[key]
+            log('status', status)
+            if (status == 'down') {
                 // 错误1
-                g.actions[key]()
+                g.actions[key]('down')
+            } else if (status == 'up') {
+                g.actions[key]('up')
+                // 删除掉 key 的状态
+                g.keydowns[key] = null
             }
         }
         // update
@@ -97,7 +102,7 @@ class WonderGame {
     }
 
     textureByName = (name) => {
-        log('image by name', this.images)
+        // log('image by name', this.images)
         var img = this.images[name]
         // var image = {
         //     w: img.width,

@@ -4,10 +4,12 @@ var mouse = function(game) {
     var ballEnableDrag = false
     var paddleEnableDrag = false
     var blockEnableDrag = false
+
     game.canvas.addEventListener('mousedown', function(event){
         log(event)
         var x = event.layerX
         var y = event.layerY
+
         // 检查是否点中了 ball
         if (ball.hasPoint(x, y)) {
             // 设置拖拽状态
@@ -24,6 +26,7 @@ var mouse = function(game) {
                 block.blockEnableDrag = true
             }
         }
+
     })
 
     game.canvas.addEventListener('mousemove', function(event){
