@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Wonder_plane</title>
+    <style media="screen">
+        /* body {
+            background: grey;
+        } */
+        div {
+            float: left;
+        }
+
+        canvas {
+            border: 1px black solid;
+            /* background-color: black; */
+            float: left;
+
+        }
+
+        label {
+            float: left;
+        }
+
+        input {
+          -webkit-appearance: none;
+          width: 40%;
+          height: 15px;
+          border-radius: 5px;
+          background: #d3d3d3;
+          outline: none;
+          opacity: 0.7;
+          -webkit-transition: .2s;
+          transition: opacity .2s;
+        }
+
+        input::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 25px;
+          height: 25px;
+          border-radius: 50%;
+          background: #4CAF50;
+          cursor: pointer;
+        }
+
+        /* button {
+            display: inline-block;
+        } */
+    </style>
+    <!-- wonder game 相关文件 -->
+    <script src='wondergame/utility.js'></script>
+    <script src='wondergame/wonder_game.js'></script>
+    <script src='wondergame/wonder_label.js'></script>
+    <script src='wondergame/wonder_scene.js'></script>
+    <script src='wondergame/wonder_img.js'></script>
+    <script src='wondergame/wonder_particle_system.js'></script>
+    <script src='wondergame/wonder_animation.js'></script>
+    <!-- 场景文件 -->
+    <script src='scene/main/scene.js'></script>
+    <script src='scene/main/paddle.js'></script>
+    <script src='scene/main/ball.js'></script>
+    <script src='scene/main/block.js'></script>
+    <!-- 结束和标题场景 -->
+    <script src='scene/title/scene_title.js'></script>
+    <script src='scene/end/scene_end.js'></script>
+    <!-- 关卡数据 -->
+    <!-- <script src='level.js'></script> -->
+    <!-- <script src='ranking.js'></script> -->
+    <!-- 配置数据 -->
+    <script src='config.js'></script>
+
+    </script>
+</head>
+
+<body>
+    <div class="">
+    <canvas id="id-canvas" width="288" height="512"></canvas>
+    </div>
+    <br>
+    <div class="wonder-controls">
+        <input id="id-input-speed" type="range" name="" value="1">
+        fps:
+        <br>
+    </div>
+    <!-- <div class="">
+        <textarea id="id-text-log" rows="20" cols="65"></textarea>
+    </div>
+    <hr>
+    <input id='id-input-ranking' type='text' placeholder="What's your name?">
+    <button class='id-button-add'>Ranking</button>
+    <div id="id-div-container">
+    <div> -->
+    <script src="main.js"></script>
+    <script type="text/javascript">
+        var es = sel => document.querySelectorAll(sel)
+
+        var bindAll = function(sel, eventName, callback) {
+            var l = es(sel)
+            for (let i = 0; i < l.length; i++) {
+                var input = l[i]
+                // 每个 input 绑定一个事件
+                input.addEventListener(eventName, function(event) {
+                    // 使用一个匿名函数 而不是直接写 callback
+                    callback(event)
+                })
+            }
+        }
+        var templateControl = function(key, item) {
+            var t = `
+            <div class="">
+                <label>
+                    <input class="class-auto-slider" type="range"  max="300" value="${item.value}" data-value="config.${key}">
+                    ${item._comment}<span class="class-slide-value-label"></span>
+                </label>
+            </div>
+            `
+            return t
+        }
+
+        var insertControls = function() {
+            // 读取所有的 keys
+            var div = e('.wonder-controls')
+            var keys = Object.keys(config)
+            for (var k of keys) {
+                log('k', k)
+                var item = config[k]
+                var html = templateControl(k, item)
+                div.insertAdjacentHTML('beforeend', html)
+            }
+        }
+
+        var bindEvents = function() {
+            bindAll('.class-auto-slider', 'input',  function(event) {
+                var target = event.target
+                var bindVar = target.dataset.value
+                var v = target.value
+                eval(bindVar + '.value =' + v)
+                //
+                var label = target.closest('label').querySelector('.class-slide-value-label')
+                label.innerText = v
+            })
+        }
+
+        var __main = function() {
+            // 从配置文件中生成 HTML 控件
+            insertControls()
+            // 绑定事件
+            bindEvents()
+        }
+
+        __main()
+    </script>
+</body>
+
+</html>
