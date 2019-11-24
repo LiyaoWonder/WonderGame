@@ -33,16 +33,16 @@ class SceneTitle extends WonderScene {
     update() {
         super.update()
         // 地面移动
-        // this.skipCount--
-        // var offset = -5
-        // if (this.skipCount == 0) {
-        //     this.skipCount = 4
-        //     offset = 15
-        // }
-        // for (var i = 0; i < 20; i++) {
-        //     var g = this.grounds[i]
-        //     g.x += offset
-        // }
+        this.skipCount--
+        var offset = -5
+        if (this.skipCount == 0) {
+            this.skipCount = 4
+            offset = 15
+        }
+        for (var i = 0; i < 20; i++) {
+            var g = this.grounds[i]
+            g.x += offset
+        }
     }
     draw() {
         // this.game.context.font = "40px serif"
