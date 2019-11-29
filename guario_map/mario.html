@@ -47,36 +47,18 @@
                 r.send()
             }
 
-            const drawBlock = (context, data, x, y, pixelWidth) => {
-                const colors = [
-                    'white',
-                    '#FF0000',
-                    '#FFAA4E',
-                    '#884400',
-                ]
-                let w = pixelWidth
-                let h = pixelWidth
-                for (let i = 0; i < 8; i++) {
-                    let p1 = data[i]
-                    let p2 = data[i + 8]
-                    for (let j = 0; j < 8; j++) {
-                        // 8 bits per line
-                        // 78: 0100 1110
-                        // 69: 0100 0101
-                        // 在 j 循环中 每一次 画一个像素点
-                        // c: color
-                        let c1 = (p1 >> (7 - j)) & 0b00000001
-                        let c2 = (p2 >> (7 - j)) & 0b00000001
-                        let pixel = (c2 << 1) + c1
-                        if (pixel != 0) {
-                            let color = colors[pixel]
-                            context.fillStyle = color
-                            let px = x + j * w
-                            let py = y + i * h
-                            context.fillRect(px, py, w, h)
-                        }    
+            const bindEvents = () => {
+                e('body').addEventListener('click', event => {
+                    let action = event.target.dataset.action
+                    actions[action] && actions[action](event)
+                })
+
+                window.addEventListener('keydown', event => {
+                    log('event', event.key)
+                    if (event.key == 'p') {
+                        window.paused = !window.paused
                     }
-                }
+                })
             }
 
             const drawNes = bytes => {
@@ -86,7 +68,7 @@
 
                 let canvas = e('#id-canvas')
                 let context = canvas.getContext('2d')
-
+                context.clearRect(0, 0, canvas.width, canvas.height)
                 let blockSize = 8
                 let pixelSize = 8
                 let pixelWidth = 10
@@ -115,6 +97,7 @@
                     let rect = target.getBoundingClientRect()
                     let x = event.clientX - rect.left
                     let y = event.clientY - rect.top
+                    // i j 算出在 tile 中的第几个
                     let i = Math.floor(x / 80)
                     let j = Math.floor(y / 80)
                     let bytesPerBlock = 16
@@ -128,23 +111,39 @@
                         log('if target', target)
                         drawSprite(data, target, i, j, 1, 1)
                     }
-                    log('x, y, i, j', x, y, i, j)
                 }
             }
 
-            const bindEvents = () => {
-                e('body').addEventListener('click', event => {
-                    let action = event.target.dataset.action
-                    actions[action] && actions[action](event)
-
-                })
-
-                window.addEventListener('keydown', event => {
-                    log('event', event.key)
-                    if (event.key == 'p') {
-                        window.paused = !window.paused
+            const drawBlock = (context, data, x, y, pixelWidth) => {
+                const colors = [
+                    'white',
+                    '#FF0000',
+                    '#FFAA4E',
+                    '#884400',
+                ]
+                let w = pixelWidth
+                let h = pixelWidth
+                for (let i = 0; i < 8; i++) {
+                    let p1 = data[i]
+                    let p2 = data[i + 8]
+                    for (let j = 0; j < 8; j++) {
+                        // 8 bits per line
+                        // 78: 0100 1110
+                        // 69: 0100 0101
+                        // 在 j 循环中 每一次 画一个像素点
+                        // c: color
+                        let c1 = (p1 >> (7 - j)) & 0b00000001
+                        let c2 = (p2 >> (7 - j)) & 0b00000001
+                        let pixel = (c2 << 1) + c1
+                        if (pixel != 0) {
+                            let color = colors[pixel]
+                            context.fillStyle = color
+                            let px = x + j * w
+                            let py = y + i * h
+                            context.fillRect(px, py, w, h)
+                        }
                     }
-                })
+                }
             }
 
             const drawSprite = (data, canvas_draw, offsetX, offsetY, w, h) => {
@@ -176,22 +175,22 @@
                         log('bytes', bytes)
                         drawNes(bytes)
                         // 闭包 外部的变量被内部的函数使用
-                        let step = 0
-                        let bytesPerBlock = 16
-                        let tilesPerSprite = 8
-                        let bytesPerSprite = bytesPerBlock * tilesPerSprite
+                        // let step = 0
+                        // let bytesPerBlock = 16
+                        // let tilesPerSprite = 8
+                        // let bytesPerSprite = bytesPerBlock * tilesPerSprite
                         // setInterval 不断的重新画它
-                        setInterval(function(){
-                            let offset = tileOffset + step * bytesPerSprite
-                            drawSprite(bytes.slice(offset))
-                            if (window.paused) {
-                                // pause
-                            } else {
-                                step++
-                                // 4 个画面循环
-                                step %= 4
-                            }
-                        }, 200)
+                        // setInterval(function(){
+                            // let offset = tileOffset + step * bytesPerSprite
+                            // // drawSprite(bytes.slice(offset))
+                            // if (window.paused) {
+                            //     // pause
+                            // } else {
+                            //     step++
+                            //     // 4 个画面循环
+                            //     step %= 4
+                            // }
+                        // }, 200)
                     },
                 }
                 ajax(request)
