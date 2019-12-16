@@ -4,25 +4,59 @@ class SceneTitle extends WonderScene {
         this.setup()
     }
     setup() {
-        // 一切功能的使用，函数的定义都写入在 setup 中
-        // bg
+        // 先初始化属性
+        this.enemies = []
+        this.towers = []
+        this.setupBG()
+        //
+        this.setupTower()
+        this.setupGameElements()
+        // gun Head-up display HUD(ui)
+        this.setupHUD()
+        //
+        this.setupInputs()
+    }
+    setupTower() {
+        let t1 = new Tower(this.game, 'tower1')
+        t1.x = 300
+        t1.y = 270
+        this.addElement(t1)
+        this.towers.push(t1)
+    }
+    setupBG() {
         let bg = new WonderImg(this.game, 'bg')
         this.addElement(bg)
-        // gun ui
+    }
+    setupGameElements() {
+        let e1 = new Soldier(this.game, 's1')
+        this.addElement(e1)
+        let e2 = new Soldier(this.game, 's1')
+        e2.x = - (e2.w * 2)
+        log('e2', e2.x)
+        this.addElement(e2)
+        //
+        this.enemies.push(e1)
+        this.enemies.push(e2)
+    }
+    setupHUD() {
         let gun = new WonderImg(this.game, 'gun')
         gun.x = 400
         gun.y = 330
         // 给一个引用
         this.gun = gun
         this.addElement(gun)
-        //
-        this.setupInputs()
     }
     debug() {
 
     }
     update() {
         super.update()
+        // 给所有没有 target 的 tower 寻找目标
+        for (let t of this.towers) {
+            if (t.target === null) {
+                t.findTarget(this.enemies)
+            }
+        }
     }
     draw() {
         // this.game.context.font = "40px serif"

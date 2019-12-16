@@ -39,11 +39,13 @@ var enableDebugMode = function(game, enable) {
 var __main = function() {
     var images = {
         bg: 'resources/img/bg.png',
-        gun: 'resources/img/gun.png'
+        gun: 'resources/img/gun.png',
+        s1: 'resources/img/s2.png',
+        tower1: 'resources/img/tower1.png',
     }
 
     var game = new WonderGame(30, images, function(g){
-        // var scene = new Scene(game)
+        // var scene = new Scene(game)s
         // var scene = new SceneEditor(game)
         var scene = new SceneTitle(game)
         /*
